@@ -77,7 +77,9 @@ export default (server) => {}
 ### Registering routes
 The file-system is the main API. Every *.mjs* file inside the *routes/* directory becomes a plugin that gets automatically registered.
 
-**pleasant** uses the following glob pattern: `routes/{*,*/index}.mjs`
+**pleasant** uses the following glob patterns:
+* `routes/*.mjs`
+* `routes/*/index.mjs`
 
 An example:
 ```text
