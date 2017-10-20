@@ -3,7 +3,7 @@ export default (server) => {
     method: 'GET',
     url: '/',
     handler: (req, res) => {
-      res.send(200, { hello: 'world' })
+      res.send({ hello: 'world' })
     }
   })
 }

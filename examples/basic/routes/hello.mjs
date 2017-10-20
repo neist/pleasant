@@ -4,7 +4,7 @@ export default (server) => {
     url: '/hello/:name',
     handler: (req, res) => {
       const { name } = req.params
-      res.send(200, { hello: name })
+      res.send({ hello: name })
     }
   })
 }

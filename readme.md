@@ -48,6 +48,11 @@ $ npm start
 * Asynchronous
 * Fast
 
+### Examples
+* [Basic boilerplate](https://github.com/neist/pleasant/tree/master/examples/basic)
+
+... More examples coming soon.
+
 ### ES Modules
 With the help of [@std/esm](https://github.com/standard-things/esm), **pleasant** has full out-of-the-box ESM support.
 
