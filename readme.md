@@ -419,8 +419,7 @@ server.listen(3000, (err) => {
 ```
 
 ### Benchmarks
-This is a synthetic, "hello world" benchmark that aims to evaluate the framework overhead.
-
+This is a synthetic, "hello world" benchmark that aims to evaluate the framework overhead. Don't trust this :-)
 
 * http.createServer: 27,851 Req/Sec
 * micro: 23,624 Req/Sec
