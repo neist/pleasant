@@ -1,7 +1,7 @@
 {
   "name": "pleasant",
-  "version": "0.0.5",
-  "description": "Pleasent HTTP framework",
+  "version": "0.0.6",
+  "description": "A minimalistic, asynchronous and ESM-ready HTTP framework.",
   "tags": ["web", "framework", "api", "ESM", "http"],
   "main": "index.js",
   "bin": {
