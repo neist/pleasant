@@ -1,4 +1,4 @@
-# Basic example
+# With plugin
 
 Install it:
 ```bash

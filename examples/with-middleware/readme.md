@@ -1,4 +1,4 @@
-# Basic example
+# With middleware
 
 Install it:
 ```bash
