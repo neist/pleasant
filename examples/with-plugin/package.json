@@ -9,6 +9,6 @@
   "author": "Kasper Neist <kasper@neist.com>",
   "license": "ISC",
   "dependencies": {
-    "pleasant": "0.0.6"
+    "pleasant": "0.0.7"
   }
 }
