@@ -423,6 +423,19 @@ This is a synthetic, "hello world" benchmark that aims to evaluate the framework
 * Express: 12,362 Req/Sec
 * Hapi: 4,357 Req/Sec
 
+### CLI
+```bash
+$ pleasant -h
+
+  Usage: pleasant [options] [entry]
+  
+  Options:
+    -p, --port <n>  Port to listen on (defaults to 3000)
+    -H, --host      The host on which server will run
+    -v, --version   Output the version number
+    -h, --help      Show this usage information
+```
+
 ### Inspiration
 * [hapi](https://github.com/hapijs/hapi)
 * [next.js](https://github.com/zeit/next.js/)
