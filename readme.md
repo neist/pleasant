@@ -50,6 +50,8 @@ $ npm start
 
 ### Examples
 * [Basic boilerplate](https://github.com/neist/pleasant/tree/master/examples/basic)
+* [With middleware](https://github.com/neist/pleasant/tree/master/examples/with-middleware)
+* [With plugins](https://github.com/neist/pleasant/tree/master/examples/with-plugins)
 
 ... More examples coming soon.
 

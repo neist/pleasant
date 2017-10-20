@@ -1,6 +1,7 @@
 {
   "name": "pleasant-example",
   "version": "1.0.0",
+  "main": "index.mjs",
   "scripts": {
     "dev": "NODE_ENV=development pleasant",
     "start": "NODE_ENV=production pleasant"
