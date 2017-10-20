@@ -1,5 +1,7 @@
 # Pleasant
 
+[![NPM version](https://img.shields.io/npm/v/pleasant.svg)](https://www.npmjs.com/package/pleasant)
+
 A minimalistic, asynchronous and ESM-ready HTTP framework.
 
 ### Getting started
@@ -288,7 +290,7 @@ Add a route
 * `config`
   * `method` HTTP method. Typically one of 'GET', 'POST', 'PUT', 'PATCH', 'DELETE', or 'OPTIONS'.
   * `url` The url for which the handler/middleware is invoked.
-  * `validate` Request input validation rules for various request components. Requires Joi validation objects.
+  * `validate` Request input validation rules for various request components. Uses [joi](https://github.com/hapijs/joi) for validation.
     * `headers` Validation rules for incoming request headers.
     * `query` Validation rules for an incoming request URI query component. The query is parsed into its individual key-value pairs and stored in req.query prior to validation.
     * `body` Validation rules for an incoming request body.
@@ -408,3 +410,18 @@ server.listen(3000, (err) => {
   console.log(`Accepting connections...`)
 })
 ```
+
+### Benchmarks
+This is a synthetic, "hello world" benchmark that aims to evaluate the framework overhead.
+
+
+* http.createServer: 27,851 Req/Sec
+* micro: 23,624 Req/Sec
+* **pleasant: 20,529 Req/Sec**
+* Express: 12,362 Req/Sec
+* Hapi: 4,357 Req/Sec
+
+### Inspiration
+* [hapi](https://github.com/hapijs/hapi)
+* [next.js](https://github.com/zeit/next.js/)
+* [micro](https://github.com/zeit/micro)
