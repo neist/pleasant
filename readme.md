@@ -51,6 +51,8 @@ $ npm start
 ### ES Modules
 With the help of [@std/esm](https://github.com/standard-things/esm), **pleasant** has full out-of-the-box ESM support.
 
+You don't need to set up babel or any other transpiling.
+
 So instead of:
 ```js
 // routes/index.js
@@ -72,7 +74,7 @@ The file-system is the main API. Every *.mjs* file inside the *routes/* director
 `routes/{*,**/index}.mjs`
 
 An example:
-```
+```text
 routes/
   route-a.mjs <-- Registered
   route-b.mjs <-- Registered
@@ -280,7 +282,7 @@ Example:
 ```js
 import awesomePlugin from './awesome-plugin'
 
-server.register([
+await server.register([
   awesomePlugin,
   import('./another-plugin')
 ])
