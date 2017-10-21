@@ -2,6 +2,9 @@
   "name": "pleasant",
   "version": "0.0.11",
   "description": "A minimalistic, asynchronous and ESM-ready HTTP framework.",
+  "engines": {
+    "node": ">= 8.5.0"
+  },
   "tags": [
     "web",
     "framework",

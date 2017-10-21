@@ -1,7 +1,7 @@
 # Pleasant 👌
 
 [![NPM version](https://img.shields.io/npm/v/pleasant.svg)](https://www.npmjs.com/package/pleasant)
-![version](https://img.shields.io/badge/node-%3E8.0.0-brightgreen.svg)
+![version](https://img.shields.io/badge/node-%3E8.5.0-brightgreen.svg)
 
 A minimalistic, asynchronous and ESM-ready HTTP framework.
 
