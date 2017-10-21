@@ -279,10 +279,11 @@ Use the given middleware function for all http methods on the given path, defaul
 * `path` The path for which the middleware function is invoked
 * `middleware` A middleware function
 
-#### `server.register(plugins)`
+#### `server.register(plugins, [config = {}])`
 **pleasant** allows the user to extend its functionalities with plugins.
 
-* `plugins` An array of dynamic or static module  imports
+* `plugins` An array of dynamic or static module imports
+* `config` An optional configuration object that's passed to the plugins
 
 Plugins are loaded and executed in series, each one running once the previous plugin has finished registering.
 
@@ -293,8 +294,16 @@ import awesomePlugin from './awesome-plugin'
 await server.register([
   awesomePlugin,
   import('./another-plugin')
-])
+], { a: 'b', c: 'd' })
 ```
+```js
+// awesome-plugin.mjs
+export default async (server, config) => {
+  console.log(config) // { a: 'b', c: 'd' }
+}
+```
+
+
 #### `server.route(config)`
 Add a route
 * `config`
