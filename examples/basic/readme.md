@@ -1,4 +1,4 @@
-# Basic example
+# Basic routing
 
 Install it:
 ```bash

@@ -1,6 +1,7 @@
-# Pleasant
+# Pleasant 👌
 
 [![NPM version](https://img.shields.io/npm/v/pleasant.svg)](https://www.npmjs.com/package/pleasant)
+![version](https://img.shields.io/badge/node-%3E8.0.0-brightgreen.svg)
 
 A minimalistic, asynchronous and ESM-ready HTTP framework.
 
@@ -42,14 +43,14 @@ $ npm start
 
 ### Highlights
 * Out-of-the-box ESM support (.mjs)
-* No configuration - focus on the code
+* No boilerplating - focus on the code
 * Middleware, routing and validation
+* Fast (See benchmarks)
 * Plain HTTP
 * Asynchronous
-* Fast
 
 ### Examples
-* [Basic boilerplate](https://github.com/neist/pleasant/tree/master/examples/basic)
+* [Basic routing](https://github.com/neist/pleasant/tree/master/examples/basic)
 * [With middleware](https://github.com/neist/pleasant/tree/master/examples/with-middleware)
 * [With plugin](https://github.com/neist/pleasant/tree/master/examples/with-plugin)
 
@@ -308,22 +309,6 @@ Add a route
     * A middleware function
     * An array of middleware functions
 
-The response object is plain HTTP except for `res.query` and `res.send`
-
-`res.query`
-This property is an object containing a property for each query string parameter in the route.
-
-`res.send([statusCode], data = null)`
-Sends the HTTP response.
-
-* `statusCode` is a `Number` with the HTTP status code. Defaults to 200.
-* `data` If data is supplied it is sent in the response. Different input types are processed appropriately, and Content-Type and Content-Length are automatically set
-  * `Stream`: `data` is piped as an `octet-stream`.
-  * `Buffer`: `data` is written as an `octet-stream`.
-  * `object`: `data` is serialized as JSON.
-  * `string`: `data` is written as-is.
-  * `boom`: `Error` is written as boom payload.
-
 Example:
 ```js
 import joi from 'joi'
@@ -346,6 +331,22 @@ server.route({
   }
 })
 ```
+
+The response object is plain HTTP except for `res.query` and `res.send`
+
+##### `res.query`
+This property is an object containing a property for each query string parameter in the route.
+
+##### `res.send([statusCode = 200], data = null)`
+Sends the HTTP response.
+
+* `statusCode` HTTP status code. Defaults to 200.
+* `data` If data is supplied it is sent in the response. Different input types are processed appropriately, and Content-Type and Content-Length are automatically set
+  * `Stream`: `data` is piped as an `octet-stream`.
+  * `Buffer`: `data` is written as an `octet-stream`.
+  * `object`: `data` is serialized as JSON.
+  * `string`: `data` is written as-is.
+  * `Error`: `boom` is written as boom payload.
 
 #### `server.on(type, handler)`
 Register an event handler for the given type.
