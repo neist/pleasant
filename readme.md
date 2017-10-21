@@ -108,14 +108,13 @@ export default async (server) => {
 ### Main entry file (optional)
 The main entry file is called *before* automatically registering routes, which makes it useful for configuration, plugins, middleware etc. You can even choose to opt-out of automatically registering routes and do it manually.
 
-You can specify a main entry file by doing one of the following:
+You can specify a main entry file (*index.mjs*) by doing the following:
 
 *package.json*
 ```json
 {
-  "main": "index.mjs",
   "scripts": {
-    "start": "pleasant"
+    "start": "pleasant index.mjs"
   }
 }
 ```

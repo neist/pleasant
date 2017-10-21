@@ -1,15 +1,14 @@
 {
   "name": "pleasant-example",
   "version": "1.0.0",
-  "main": "index.mjs",
   "scripts": {
-    "dev": "NODE_ENV=development pleasant",
-    "start": "NODE_ENV=production pleasant"
+    "dev": "NODE_ENV=development pleasant index.mjs",
+    "start": "NODE_ENV=production pleasant index.mjs"
   },
   "author": "Kasper Neist <kasper@neist.com>",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.4",
-    "pleasant": "0.0.9"
+    "pleasant": "0.0.10"
   }
 }
