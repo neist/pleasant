@@ -279,6 +279,22 @@ Use the given middleware function for all http methods on the given path, defaul
 * `path` The path for which the middleware function is invoked
 * `middleware` A middleware function
 
+```js
+server.use((req, res, next) => {
+  console.log('Logged')
+  next()
+})
+```
+
+Define error-handling middleware functions in the same way as other middleware functions, except error-handling functions have four arguments instead of three: (err, req, res, next). For example:
+```js
+import boom from 'boom'
+
+server.use((err, req, res, next) => {
+  // console.error(err.stack)
+})
+```
+
 #### `server.register(plugins, [config = {}])`
 **pleasant** allows the user to extend its functionalities with plugins.
 
@@ -368,6 +384,23 @@ const logger = e => console.log('foo', e)
 server.on('foo', logger)
 ```
 
+**pleasant** only has *one* built-in event. This event is `'ready'`, which is emitted right before the server starts `listening`. This is useful for error-handling middleware, which you must define last, after other `server.use()` and `server.route()` calls.
+
+Example:
+```js
+server.on('ready', () => {
+  // Custom 404 handler
+  server.use((req, res, next) => {
+    res.send(404, { error: 'Not Found' })
+  })
+
+  // Custom error handler
+  server.use((err, req, res, next) => {
+    res.send(500, { error: 'Internal Server Error' })
+  })
+})
+```
+
 #### `server.off(type, handler)`
 Remove an event handler for the given type.
 * `type` Type of event to unregister handler from, or "*"
@@ -409,6 +442,15 @@ Example:
 server.get('config') // { a: 'b', c: 'd' }
 server.get() // { config: { a: 'b', c: 'd' } }
 ```
+
+#### `server.listen()`
+The node HTTP server `listen()` function.
+
+#### `server.close()`
+The node HTTP server `close()` function.
+
+#### `server.listener`
+The node HTTP server object.
 
 ### Programmatic use
 You can use **pleasant** programmatically by requiring directly:

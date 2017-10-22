@@ -1,6 +1,6 @@
 {
   "name": "pleasant",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "A minimalistic, asynchronous and ESM-ready HTTP framework.",
   "engines": {
     "node": ">= 8.5.0"
