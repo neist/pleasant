@@ -355,7 +355,7 @@ server.route({
 })
 ```
 
-The response object is plain HTTP except for `req.params`, `req.query`, and `res.send`
+The request and response objects are plain HTTP except for `req.params`, `req.query`, and `res.send`
 ##### `req.params`
 This property is an object containing properties mapped to the named route “parameters”. For example, if you have the route /user/:name, then the “name” property is available as req.params.name. This object defaults to {}
 
