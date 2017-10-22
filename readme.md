@@ -288,10 +288,8 @@ server.use((req, res, next) => {
 
 Define error-handling middleware functions in the same way as other middleware functions, except error-handling functions have four arguments instead of three: (err, req, res, next). For example:
 ```js
-import boom from 'boom'
-
 server.use((err, req, res, next) => {
-  // console.error(err.stack)
+  // Handle error
 })
 ```
 
@@ -357,9 +355,11 @@ server.route({
 })
 ```
 
-The response object is plain HTTP except for `res.query` and `res.send`
+The response object is plain HTTP except for `req.params`, `req.query`, and `res.send`
+##### `req.params`
+This property is an object containing properties mapped to the named route “parameters”. For example, if you have the route /user/:name, then the “name” property is available as req.params.name. This object defaults to {}
 
-##### `res.query`
+##### `req.query`
 This property is an object containing a property for each query string parameter in the route.
 
 ##### `res.send([statusCode = 200], data = null)`
