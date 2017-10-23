@@ -420,7 +420,6 @@ Invoke all handlers for the given type. If present, "*" handlers are invoked aft
 Example:
 ```js
 await server.emit('foo', { a: 'b' })
-// All 
 ```
 
 #### `server.set(key, value)`
