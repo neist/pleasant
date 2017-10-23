@@ -8,6 +8,6 @@
   "author": "Kasper Neist <kasper@neist.com>",
   "license": "ISC",
   "dependencies": {
-    "pleasant": "1.0.17"
+    "pleasant": "1.0.18"
   }
 }
