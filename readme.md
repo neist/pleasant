@@ -475,11 +475,11 @@ server.listen(3000, (err) => {
 ### Benchmarks
 This is a synthetic, "hello world" benchmark that aims to evaluate the framework overhead. Don't trust this :-)
 
-* http.createServer: 27,851 Req/Sec
-* micro: 23,624 Req/Sec
-* **pleasant: 20,529 Req/Sec**
-* Express: 12,362 Req/Sec
-* Hapi: 4,357 Req/Sec
+* http.createServer: 39,680 Req/Sec
+* micro: 37,018 Req/Sec
+* **pleasant: 30,549 Req/Sec**
+* Express: 18,273 Req/Sec
+* Hapi: 6,207 Req/Sec
 
 ### CLI
 ```bash
