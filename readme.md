@@ -27,7 +27,7 @@ export default async (server) => {
   server.route({
     method: 'GET',
     url: '/',
-    handler: (req, res) => {
+    handler: async (req, res) => {
       res.send('Hello World')
     }
   })
@@ -177,7 +177,7 @@ export default async (server) => {
 server.route({
   method: 'GET',
   url: '/users/:userId/books/:bookId',
-  handler: (req, res) => {
+  handler: async (req, res) => {
     // Request URL: http://localhost:3000/users/34/books/8989
     // req.params: { "userId": "34", "bookId": "8989" }
   }
@@ -199,7 +199,7 @@ server.route({
       limit: joi.number().default(10).max(100)
     }
   },
-  handler: (req, res) => {
+  handler: async (req, res) => {
     const { offset, limit } = req.query
     //res.send()
   }
@@ -223,7 +223,7 @@ import boom from 'boom'
 server.route({
   method: 'GET',
   url: '/',
-  handler: (req, res) => {
+  handler: async (req, res) => {
     // res.send(boom.notFound())
     // res.send(boom.badRequest())
     res.send(boom.badImplementation())
@@ -261,7 +261,7 @@ server.route({
   handler: [
     cors(),
     // ... and more
-    (req, res) => {
+    async (req, res) => {
       res.send('Hello World')
     }
   ]
@@ -346,7 +346,7 @@ server.route({
       limit: joi.number().default(10).max(100)
     }
   },
-  handler: (req, res) => {
+  handler: async (req, res) => {
     // res.send('Hello World')
     // res.send(200, { status: 'ok' })
     // res.send(boom.notFound())
@@ -461,7 +461,7 @@ const server = require('pleasant')()
 server.route({
   method: 'GET',
   url: '/',
-  handler: (req, res) => {
+  handler: async (req, res) => {
     res.send('Hello World')
   }
 })
