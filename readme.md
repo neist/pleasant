@@ -1,7 +1,7 @@
 # Pleasant 👌
 
 [![NPM version](https://img.shields.io/npm/v/pleasant.svg)](https://www.npmjs.com/package/pleasant)
-![version](https://img.shields.io/badge/node-%3E8.5.0-brightgreen.svg)
+![version](https://img.shields.io/badge/node-%3E=8.5.0-brightgreen.svg)
 
 A minimalistic, asynchronous and ESM-ready HTTP framework.
 
@@ -293,7 +293,7 @@ server.use((err, req, res, next) => {
 })
 ```
 
-#### `server.register(plugins, [config = {}])`
+#### `await server.register(plugins, [config = {}])`
 **pleasant** allows the user to extend its functionalities with plugins.
 
 * `plugins` An array of dynamic or static module imports
@@ -388,7 +388,7 @@ server.on('foo', logger)
 
 Example:
 ```js
-server.on('ready', () => {
+server.on('ready', async () => {
   // Custom 404 handler
   server.use((req, res, next) => {
     res.send(404, { error: 'Not Found' })
@@ -412,14 +412,15 @@ const logger = e => console.log('foo', e)
 server.off('foo', logger)
 ```
 
-#### `server.emit(type, event)`
+#### `await server.emit(type, event)`
 Invoke all handlers for the given type. If present, "*" handlers are invoked after type-matched handlers.
 * `type` The event type to invoke
 * `event` Any value (object is recommended and powerful), passed to each handler
 
 Example:
 ```js
-server.emit('foo', { a: 'b' })
+await server.emit('foo', { a: 'b' })
+// All 
 ```
 
 #### `server.set(key, value)`

@@ -17,11 +17,10 @@
     "pleasant": "bin/pleasant.js"
   },
   "scripts": {
-    "precommit": "lint-staged",
-    "postinstall": "node check-version.js"
+    "precommit": "lint-staged"
   },
   "lint-staged": {
-    "*.mjs": [
+    "*.{js,mjs}": [
       "prettier --single-quote --no-semi --write",
       "git add"
     ]
@@ -41,7 +40,6 @@
     "glob": "^7.1.2",
     "is-stream": "^1.1.0",
     "joi": "^13.0.0",
-    "mitt": "^1.1.2",
     "mri": "^1.1.0",
     "pretty-error": "^2.1.1",
     "router": "^1.3.2",
