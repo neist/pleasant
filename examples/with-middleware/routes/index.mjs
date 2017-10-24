@@ -1,6 +1,4 @@
-export default async (server) => {
-  // const config = server.get('config')
-
+export default async server => {
   server.route({
     method: 'GET',
     url: '/',
