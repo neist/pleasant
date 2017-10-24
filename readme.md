@@ -477,7 +477,7 @@ This is a synthetic, "hello world" benchmark that aims to evaluate the framework
 
 * http.createServer: 39,680 Req/Sec
 * micro: 37,018 Req/Sec
-* **pleasant: 30,549 Req/Sec**
+* **pleasant: 32,896 Req/Sec**
 * Express: 18,273 Req/Sec
 * Hapi: 6,207 Req/Sec
 
