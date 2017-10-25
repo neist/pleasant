@@ -6,19 +6,16 @@ export default async server => {
     url: '/',
     validate: {
       query: {
-        type: joi
-          .string()
-          .valid(['type-a', 'type-b'])
-          .required(),
+        type: joi.string().required(),
         offset: joi
           .number()
-          .default(0)
-          .min(0),
+          .min(0)
+          .default(0),
         limit: joi
           .number()
-          .default(50)
           .min(0)
           .max(100)
+          .default(50)
       }
     },
     handler: async ({ query }, res) => {
