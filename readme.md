@@ -51,8 +51,11 @@ $ npm start
 
 ### Examples
 * [Basic routing](https://github.com/neist/pleasant/tree/master/examples/basic)
-* [With middleware](https://github.com/neist/pleasant/tree/master/examples/with-middleware)
-* [With plugin](https://github.com/neist/pleasant/tree/master/examples/with-plugin)
+* [Middleware](https://github.com/neist/pleasant/tree/master/examples/with-middleware)
+* [Plugin](https://github.com/neist/pleasant/tree/master/examples/with-plugin)
+* [Authentication](https://github.com/neist/pleasant/tree/master/examples/with-auth)
+* [Validation](https://github.com/neist/pleasant/tree/master/examples/with-validation)
+* [Custom 404](https://github.com/neist/pleasant/tree/master/examples/custom-404)
 
 ... More examples coming soon.
 

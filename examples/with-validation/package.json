@@ -1,0 +1,14 @@
+{
+  "name": "pleasant-example",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "NODE_ENV=development pleasant",
+    "start": "NODE_ENV=production pleasant"
+  },
+  "author": "Kasper Neist <kasper@neist.com>",
+  "license": "ISC",
+  "dependencies": {
+    "joi": "^13.0.1",
+    "pleasant": "1.0.19"
+  }
+}
