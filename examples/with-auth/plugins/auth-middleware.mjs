@@ -1,6 +1,6 @@
 import boom from 'boom'
 
-export const auth = scope => (req, res, next) => {
+export default scope => (req, res, next) => {
   // User object already present?
   let user = req.user || false
 
@@ -31,15 +31,4 @@ export const auth = scope => (req, res, next) => {
 
   // Continue
   next()
-}
-
-export default async server => {
-  // Make auth-middleware available through server store for easy access
-  server.set('auth-middleware', auth)
-
-  // Enable authentication for all routes without requiring scope - optional
-  server.use(auth())
-
-  // Enable authentication for subset of routes - optional
-  // server.use('/admin/*', auth('admin'))
 }

@@ -1,9 +1,6 @@
-import joi from 'joi'
-import boom from 'boom'
+import auth from '../plugins/auth-middleware'
 
 export default async server => {
-  const auth = server.get('auth-middleware')
-
   server.route({
     method: 'GET',
     url: '/require-scope',

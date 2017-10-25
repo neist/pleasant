@@ -1,3 +1,6 @@
+import auth from './plugins/auth-middleware'
+
 export default async server => {
-  await server.register([import('./plugins/auth')])
+  // Enable auth for the entire server (Without requiring scope)
+  server.use(auth())
 }
