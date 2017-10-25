@@ -12,7 +12,7 @@ export default scope => (req, res, next) => {
     }
   }
 
-  // USer not found
+  // User not found
   if (!user) {
     return res.send(boom.forbidden(`This route requires authentication`))
   }
