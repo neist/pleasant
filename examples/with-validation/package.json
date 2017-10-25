@@ -9,6 +9,6 @@
   "license": "ISC",
   "dependencies": {
     "joi": "^13.0.1",
-    "pleasant": "1.0.20"
+    "pleasant": "1.0.21"
   }
 }

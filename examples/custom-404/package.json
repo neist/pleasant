@@ -9,6 +9,6 @@
   "license": "ISC",
   "dependencies": {
     "boom": "^6.0.0",
-    "pleasant": "1.0.20"
+    "pleasant": "1.0.21"
   }
 }
