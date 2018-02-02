@@ -32,10 +32,10 @@
   },
   "repository": "git@github.com:neist/pleasant.git",
   "dependencies": {
-    "@std/esm": "^0.11.3",
+    "@std/esm": "^0.20.0",
     "bluebird": "^3.5.1",
     "body-parser": "^1.18.2",
-    "boom": "^6.0.0",
+    "boom": "^7.1.1",
     "connect-query": "^1.0.0",
     "glob": "^7.1.2",
     "is-stream": "^1.1.0",
@@ -47,7 +47,7 @@
   },
   "devDependencies": {
     "husky": "^0.14.3",
-    "lint-staged": "^4.3.0",
+    "lint-staged": "^6.1.0",
     "prettier": "^1.7.4"
   }
 }
