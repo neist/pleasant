@@ -23,7 +23,7 @@ Add a start script in *package.json*
 
 Populate *routes/index.mjs*
 ```js
-export default async (server) => {
+export default async server => {
   server.route({
     method: 'GET',
     url: '/',
@@ -68,14 +68,14 @@ So instead of:
 ```js
 // routes/index.js
 const something = require('something')
-module.exports = (server) => {}
+module.exports = server => {}
 ```
 
 You do:
 ```js
 // routes/index.mjs
 import something from 'something'
-export default (server) => {}
+export default server => {}
 ```
 
 ### Registering routes
@@ -101,7 +101,7 @@ routes/
 A plugin is registered using the *default* exported function:
 ```js
 // routes/route-a.mjs
-export default async (server) => {
+export default async server => {
   // Do your magic
   // server.route({
   //   ...
@@ -132,7 +132,7 @@ The main entry file is registered using the *default* exported function:
 // index.mjs
 const { NODE_ENV = 'development' } = process.env
 
-export default async (server) => {
+export default async server => {
   // Set config
   server.set('config', {
     env: NODE_ENV
@@ -154,7 +154,7 @@ Opt-out of automatically registering routes:
 // index.mjs
 import importedPlugin from './plugins/plugin-c'
 
-export default async (server) => {
+export default async server => {
   // Register
   await server.register([
     // Plugins
