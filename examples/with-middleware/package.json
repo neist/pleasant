@@ -9,6 +9,6 @@
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.4",
-    "pleasant": "1.0.21"
+    "pleasant": "2.0.0"
   }
 }
