@@ -2,8 +2,8 @@
   "name": "pleasant-example",
   "version": "1.0.0",
   "scripts": {
-    "dev": "NODE_ENV=development pleasant index.mjs",
-    "start": "NODE_ENV=production pleasant index.mjs"
+    "dev": "NODE_ENV=development pleasant index.js",
+    "start": "NODE_ENV=production pleasant index.js"
   },
   "author": "Kasper Neist <kasper@neist.com>",
   "license": "ISC",

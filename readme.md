@@ -3,7 +3,7 @@
 [![NPM version](https://img.shields.io/npm/v/pleasant.svg)](https://www.npmjs.com/package/pleasant)
 ![version](https://img.shields.io/badge/node-%3E=8.5.0-brightgreen.svg)
 
-A minimalistic, asynchronous and ESM-ready HTTP framework.
+A minimalistic and asynchronous HTTP framework with support for ES modules.
 
 ### Getting started
 
@@ -12,16 +12,17 @@ Install it
 $ npm install pleasant --save
 ```
 
-Add a start script in *package.json*
+Add scripts in *package.json*
 ```json
 {
   "scripts": {
-    "start": "pleasant"
+    "dev": "NODE_ENV=development pleasant",
+    "start": "NODE_ENV=production pleasant"
   }
 }
 ```
 
-Populate *routes/index.mjs*
+Populate *routes/index.js*
 ```js
 export default async server => {
   server.route({
@@ -36,13 +37,17 @@ export default async server => {
 
 Start the server
 ```bash
+# Production
 $ npm start
+
+# Development
+$ npm run dev
 ```
 
 ... Is that it? **Yes**
 
 ### Highlights
-* Out-of-the-box ESM support (.mjs)
+* Out-of-the-box support for ES modules
 * No boilerplating - focus on the code
 * Middleware, routing and validation
 * Fast (See benchmarks)
@@ -60,76 +65,99 @@ $ npm start
 ... More examples coming soon.
 
 ### ES Modules
-With the help of [@std/esm](https://github.com/standard-things/esm), **pleasant** has full out-of-the-box ESM support.
-
-You don't need to set up babel or any other transpiling.
+With the help of [@std/esm](https://github.com/standard-things/esm), **pleasant** has full out-of-the-box support for ES modules. You don't need to set up babel or any other transpiling.
 
 So instead of:
 ```js
 // routes/index.js
 const something = require('something')
-module.exports = server => {}
+module.exports = async server => {}
 ```
 
-You do:
+You can do:
 ```js
-// routes/index.mjs
+// routes/index.js
 import something from 'something'
-export default server => {}
+export default async server => {}
 ```
 
-### Registering routes
-The file-system is the main API. Every *.mjs* file inside the *routes/* directory becomes a plugin that gets automatically registered.
+### Registering routes and plugins
+**pleasant** automatically registers routes and plugins.
 
-**pleasant** uses the following glob patterns:
-* `routes/*.mjs`
-* `routes/*/index.mjs`
+It uses the following glob patterns:
+* `plugins/*.js`
+* `plugins/*/index.js`
+* `routes/*.js`
+* `routes/*/index.js`
 
-An example:
-```text
+For example:
+```bash
+plugins/
+  plugin-a.js # Registered
+  plugin-b/
+    index.js  # Registered
+```
+```bash
 routes/
-  route-a.mjs <-- Registered
-  route-b.mjs <-- Registered
-  route-c.mjs <-- Registered
-  route-d/
-    index.mjs <-- Registered
-    helper.mjs <-- Ignored
-    sub-directory/
-      index.mjs <-- Ignored
+  route-a.js  # Registered
+  route-b.js  # Registered
+  route-c/
+    index.js  # Registered
+    helper.js # Ignored
 ```
 
-A plugin is registered using the *default* exported function:
+Routes and plugins are registered using the *default* exported function:
 ```js
-// routes/route-a.mjs
+// routes/route-a.js
 export default async server => {
   // Do your magic
-  // server.route({
-  //   ...
-  // })
+  server.route({
+    url: '/',
+    method: 'GET',
+    handler: async (req, res) => {
+      // Emit event
+      server.emit('log', 'Hello from route')
+
+      // Send response
+      res.send({ status: 'ok' })
+    }
+  })
 }
 ```
 
-### Main entry file (optional)
-The main entry file is called *before* automatically registering routes, which makes it useful for configuration, plugins, middleware etc. You can even choose to opt-out of automatically registering routes and do it manually.
+```js
+// plugins/plugin-a.js
+export default async server => {
+  // Do your magic
+  server.on('log', (message) => {
+    console.log(`Message received: ${message}`)
+  })
+}
+```
 
-You can specify a main entry file (*index.mjs*) by doing the following:
+### Main entry file
+The main entry file is called *before* automatically registering routes and plugins, which makes it useful for preparing config and such.
+
+You can even choose to opt-out of automatically registering routes and plugins and do it all manually in the main entry file. This requires the *manual* flag: `pleasant --manual server.js`.
+
+You can specify a main entry file (*server.js*) by doing the following:
 
 *package.json*
 ```json
 {
   "scripts": {
-    "start": "pleasant index.mjs"
+    "start": "pleasant server.js"
   }
 }
 ```
 ... or CLI
 ```bash
-$ pleasant index.mjs
+$ pleasant server.js
 ```
 
 The main entry file is registered using the *default* exported function:
 ```js
-// index.mjs
+// server.js
 const { NODE_ENV = 'development' } = process.env
 
 export default async server => {
@@ -137,41 +165,17 @@ export default async server => {
   server.set('config', {
     env: NODE_ENV
   })
-  
-  // Register plugins
-  await server.register([
-    import('./plugins/plugin-a'),
-    import('./plugins/plugin-b')
-  ])
-  
-  // Continues to automatically
-  // register plugins in routes/*
 }
 ```
 
-Opt-out of automatically registering routes:
-```js
-// index.mjs
-import importedPlugin from './plugins/plugin-c'
+### Lifecycle
 
-export default async server => {
-  // Register
-  await server.register([
-    // Plugins
-    import('./plugins/plugin-a'),
-    import('./plugins/plugin-b'),
-    importedPlugin,
-    
-    // Routes
-    import('./routes/route-a'),
-    import('./routes/route-b')
-  ])
-  
-  // Return false to opt-out of automatically
-  // registering plugins in routes/*
-  return false
-}
-```
+**pleasant** has the following lifecycle:
+1. Registers main entry file if specified
+2. Automatically registers plugins
+3. Automatically registers routes
+4. Server emits 'ready' event.
+
 
 ### Routing
 **pleasant** is built on [router](https://github.com/pillarjs/router) and supports express-like route parameters.
@@ -296,25 +300,34 @@ server.use((err, req, res, next) => {
 })
 ```
 
-#### `await server.register(plugins, [config = {}])`
-**pleasant** allows the user to extend its functionalities with plugins.
+#### `await server.register(plugin, [config = {}])`
+**pleasant** allows you to extend its functionalities with plugins.
 
-* `plugins` An array of dynamic or static module imports
-* `config` An optional configuration object that's passed to the plugins
+* `plugin` A dynamic or static module import. (Also accepts and array of plugins).
+* `config` An optional configuration object that's passed to the plugin
 
 Plugins are loaded and executed in series, each one running once the previous plugin has finished registering.
 
 Example:
 ```js
-import awesomePlugin from './awesome-plugin'
+// Import plugin
+import somePlugin from './plugin-a'
 
+// Register multiple plugins.
 await server.register([
-  awesomePlugin,
-  import('./another-plugin')
-], { a: 'b', c: 'd' })
+  somePlugin,
+  import('./plugin-b')
+])
+
+// Register a single plugin
+await server.register(
+  import('./awesome-plugin'),
+  { a: 'b', c: 'd' }
+)
 ```
+
 ```js
-// awesome-plugin.mjs
+// awesome-plugin.js
 export default async (server, config) => {
   console.log(config) // { a: 'b', c: 'd' }
 }
@@ -324,7 +337,7 @@ export default async (server, config) => {
 #### `server.route(config)`
 Add a route
 * `config`
-  * `method` HTTP method. Typically one of 'GET', 'POST', 'PUT', 'PATCH', 'DELETE', or 'OPTIONS'.
+  * `method` HTTP method. Typically one of 'GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS' or 'ALL'.
   * `url` The url for which the handler/middleware is invoked.
   * `validate` Request input validation rules for various request components. Uses [joi](https://github.com/hapijs/joi) for validation.
     * `headers` Validation rules for incoming request headers.
@@ -493,6 +506,7 @@ $ pleasant -h
   Options:
     -p, --port <n>  Port to listen on (defaults to 3000)
     -H, --host      The host on which server will run
+    -m, --manual    Disables automatically registering plugins
     -v, --version   Output the version number
     -h, --help      Show this usage information
 ```

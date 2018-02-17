@@ -2,7 +2,7 @@
 const semver = require('semver')
 const { engines } = require('../package')
 const version = engines.node
-require = require('@std/esm')(module, { esm: 'mjs', cjs: true })
+require = require('@std/esm')(module, { esm: 'all', cjs: true })
 
 if (!semver.satisfies(process.version, version)) {
   console.error(

@@ -1,4 +1,4 @@
-import auth from '../plugins/auth-middleware'
+import auth from '../plugins/auth/middleware'
 
 export default async server => {
   server.route({

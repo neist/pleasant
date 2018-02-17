@@ -1,4 +1,4 @@
-export default async (server) => {
+export default async server => {
   server.route({
     method: 'GET',
     url: '/hello/:name',
