@@ -50,7 +50,8 @@ $ npm run dev
 * Out-of-the-box support for ES modules
 * No boilerplating - focus on the code
 * Middleware, routing and validation
-* Fast (See benchmarks)
+* Pretty errors during development
+* Really fast (See benchmarks)
 * Plain HTTP
 * Asynchronous
 
