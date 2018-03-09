@@ -58,7 +58,7 @@ $ npm run dev
 ### Examples
 * [Basic routing](https://github.com/neist/pleasant/tree/master/examples/basic)
 * [Middleware](https://github.com/neist/pleasant/tree/master/examples/with-middleware)
-* [Plugin](https://github.com/neist/pleasant/tree/master/examples/with-plugin)
+* [Entry file](https://github.com/neist/pleasant/tree/master/examples/with-entry-file)
 * [Authentication](https://github.com/neist/pleasant/tree/master/examples/with-auth)
 * [Validation](https://github.com/neist/pleasant/tree/master/examples/with-validation)
 * [Custom 404](https://github.com/neist/pleasant/tree/master/examples/custom-404)
@@ -86,28 +86,22 @@ export default async server => {}
 **pleasant** automatically registers routes and plugins.
 
 It uses the following glob patterns:
-* `plugins/*.js`
-* `plugins/*/index.js`
 * `routes/*.js`
+* `routes/*.mjs`
 * `routes/*/index.js`
+* `routes/*/index.mjs`
 
 For example:
 ```bash
-plugins/
-  plugin-a.js # Registered
-  plugin-b/
-    index.js  # Registered
-```
-```bash
 routes/
   route-a.js  # Registered
-  route-b.js  # Registered
+  route-b.mjs  # Registered
   route-c/
     index.js  # Registered
     helper.js # Ignored
 ```
 
-Routes and plugins are registered using the *default* exported function:
+Routes are registered using the *default* exported function:
 ```js
 // routes/route-a.js
 export default async server => {
@@ -126,18 +120,8 @@ export default async server => {
 }
 ```
 
-```js
-// plugins/plugin-a.js
-export default async server => {
-  // Do your magic
-  server.on('log', (message) => {
-    console.log(`Message received: ${message}`)
-  })
-}
-```
-
 ### Main entry file
-The main entry file is called *before* automatically registering routes and plugins, which makes it useful for preparing config and such.
+The main entry file is called *before* automatically registering routes, which makes it useful for plugins and configuration.
 
 You can even choose to opt-out of automatically registering routes and plugins and do it all manually in the main entry file. This requires the *manual* flag: `pleasant --manual server.js`.
 
@@ -159,9 +143,15 @@ $ pleasant server.js
 The main entry file is registered using the *default* exported function:
 ```js
 // server.js
-const { NODE_ENV = 'development' } = process.env
+import cors from 'cors'
 
 export default async server => {
+  // Enable cors
+  server.use(cors())
+
+  // Get environment
+  const { NODE_ENV = 'development' } = process.env
+
   // Set config
   server.set('config', {
     env: NODE_ENV
@@ -173,7 +163,6 @@ export default async server => {
 
 **pleasant** has the following lifecycle:
 1. Registers main entry file if specified
-2. Automatically registers plugins
 3. Automatically registers routes
 4. Server emits 'ready' event.
 
@@ -507,7 +496,7 @@ $ pleasant -h
   Options:
     -p, --port <n>  Port to listen on (defaults to 3000)
     -H, --host      The host on which server will run
-    -m, --manual    Disables automatically registering plugins
+    -m, --manual    Disables automatically registering routes
     -v, --version   Output the version number
     -h, --help      Show this usage information
 ```
