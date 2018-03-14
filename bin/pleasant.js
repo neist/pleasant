@@ -2,7 +2,7 @@
 const semver = require('semver')
 const { engines } = require('../package')
 const version = engines.node
-require = require('@std/esm')(module, { esm: 'all', cjs: true })
+require = require('esm')(module, { mode: 'auto', cjs: true })
 
 if (!semver.satisfies(process.version, version)) {
   console.error(
@@ -13,4 +13,4 @@ if (!semver.satisfies(process.version, version)) {
   process.exit(1)
 }
 
-require('../lib/cli/index.mjs').default()
+require('../lib/cli/index.js').default()
