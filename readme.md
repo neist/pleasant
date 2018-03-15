@@ -113,7 +113,7 @@ export default async server => {
 
   // Register multiple plugins
   await server.register(
-    // Prefix middleware/routes
+    // Prefix
     "/api/v1",
 
     // Array of plugins
@@ -123,7 +123,7 @@ export default async server => {
       import("./routes/route-d")
     ],
     
-    // Pass options when registering
+    // Options
     {
       foo: true,
       bar: false
