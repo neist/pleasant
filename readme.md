@@ -48,16 +48,6 @@ $ npm start
 * Really fast (See benchmarks)
 * Plain HTTP
 
-### Examples
-* [Basic routing](https://github.com/neist/pleasant/tree/master/examples/basic)
-* [Middleware](https://github.com/neist/pleasant/tree/master/examples/with-middleware)
-* [Entry file](https://github.com/neist/pleasant/tree/master/examples/with-entry-file)
-* [Authentication](https://github.com/neist/pleasant/tree/master/examples/with-auth)
-* [Validation](https://github.com/neist/pleasant/tree/master/examples/with-validation)
-* [Custom 404](https://github.com/neist/pleasant/tree/master/examples/custom-404)
-
-... More examples coming soon.
-
 ### ES Modules
 With the help of [esm](https://github.com/standard-things/esm), **pleasant** has full out-of-the-box support for ES modules. You don't need to use babel or `--experimental-modules`.
 
@@ -162,7 +152,7 @@ export default async server => {
 
 
 ### Routing
-**pleasant** is built on [router](https://github.com/pillarjs/router) and supports express-like route parameters.
+**pleasant** is fully compatible with express route paths.
 
 ```js
 // URL: /users/34/books/8989
@@ -177,7 +167,7 @@ server.route({
 ```
 
 ### Middleware
-You can enable connect/express-like middleware using `server.use`
+You can enable connect/express middleware using `server.use`
 
 ```js
 import cors from 'cors'
