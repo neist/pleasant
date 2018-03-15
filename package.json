@@ -35,6 +35,7 @@
     "bluebird": "^3.5.1",
     "body-parser": "^1.18.2",
     "boom": "^7.1.1",
+    "colors": "^1.2.1",
     "connect-query": "^1.0.0",
     "esm": "^3.0.5",
     "is-stream": "^1.1.0",
