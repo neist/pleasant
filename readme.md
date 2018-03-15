@@ -186,7 +186,6 @@ const hello = (name) => (req, res, next) => {
   next()
 }
 
-
 server.route({
   method: 'GET',
   url: '/',
