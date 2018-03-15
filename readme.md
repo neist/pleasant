@@ -42,7 +42,7 @@ $ npm start
 ... Is that it? **Yes**
 
 ### Highlights
-* Easy setup
+* Easy and fast to get started
 * Out-of-the-box support for ES modules
 * Middleware, routing and validation
 * Really fast (See benchmarks)
