@@ -91,7 +91,7 @@ The main entry file is where all the magic happens. You can specify the entry (*
 $ pleasant server.js
 ```
 
-The main entry file is registered using the *default* exported function:
+The main entry file is registered using the *default* exported function, passing the server instance as argument.
 ```js
 // server.js
 import cors from 'cors'
@@ -127,14 +127,14 @@ export default async server => {
     method: 'GET',
     url: '/ping',
     handler: async (req, res) => {
-      res.send('pong')
+      res.send({ message: 'pong' })
     }
   })
 }
 ```
 
 ### Plugins
-Plugins are also registered using the *default* exported function:
+Plugins are registered using the *default* exported function, passing the server instance as argument. See API for more details.
 ```js
 // index.js
 export default async server => {
@@ -153,11 +153,6 @@ export default async server => {
     url: '/',
     method: 'GET',
     handler: async (req, res) => {
-      // Emit event
-      server.emit('log', {
-        message: 'Hello from route'
-      })
-
       // Send response
       res.send({ status: 'ok' })
     }
@@ -254,9 +249,9 @@ server.route({
 ```
 
 ### Error handling
-**pleasant** comes with a built-in error handler, which takes care of any errors that might have encountered. This default error-handling middleware function is added at the end of the middleware function stack.
+**pleasant** comes with a built-in error handler, which takes care of any errors that might encounter. This default error-handling middleware function is added at the end of the middleware function stack.
 
-You can define custom error-handling middleware last, after other server.use() and routes calls; for example:
+You can define custom error-handling middleware last, after other `server.use()` and routes calls; for example:
 ```js
 server.use((err, req, res, next) => {
   // Handle error
@@ -323,7 +318,7 @@ Plugins are loaded and registered in series, each one running once the previous 
 Example:
 ```js
 // Import some plugin
-import somePlugin from './plugin-a'
+import somePluginImport from './plugin-a'
 
 // Register a single plugin
 await server.register(
@@ -339,7 +334,7 @@ await server.register(
   // Array of plugins
   [
     import("./routes/users"),
-    somePlugin
+    somePluginImport
   ],
   
   // Pass options when registering
@@ -356,7 +351,6 @@ export default async (server, options) => {
   console.log(options) // { a: 'b', c: 'd' }
 }
 ```
-
 
 #### `server.route(config)`
 Add a route
@@ -427,22 +421,7 @@ const logger = e => console.log('foo', e)
 server.on('foo', logger)
 ```
 
-**pleasant** only has *one* built-in event. This event is `'ready'`, which is emitted right before the server starts `listening`. This is useful for error-handling middleware, which you must define last, after other `server.use()` and `server.route()` calls.
-
-Example:
-```js
-server.on('ready', async () => {
-  // Custom 404 handler
-  server.use((req, res, next) => {
-    res.send(404, { error: 'Not Found' })
-  })
-
-  // Custom error handler
-  server.use((err, req, res, next) => {
-    res.send(500, { error: 'Internal Server Error' })
-  })
-})
-```
+**pleasant** only has *one* built-in event. This event is `'ready'`, which is emitted right before the server starts listening.
 
 #### `server.off(type, handler)`
 Remove an event handler for the given type.
