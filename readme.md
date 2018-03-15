@@ -42,10 +42,11 @@ $ npm start
 ... Is that it? **Yes**
 
 ### Highlights
-* Asynchronous
+* Easy setup
 * Out-of-the-box support for ES modules
 * Middleware, routing and validation
 * Really fast (See benchmarks)
+* Asynchronous
 * Plain HTTP
 
 ### ES Modules
