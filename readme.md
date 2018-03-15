@@ -12,17 +12,16 @@ Install it
 $ npm install pleasant --save
 ```
 
-Add scripts in *package.json*
+Add start script in *package.json*
 ```json
 {
   "scripts": {
-    "dev": "NODE_ENV=development pleasant",
-    "start": "NODE_ENV=production pleasant"
+    "start": "pleasant index.js"
   }
 }
 ```
 
-Populate *routes/index.js*
+Populate *index.js*
 ```js
 export default async server => {
   server.route({
@@ -37,23 +36,17 @@ export default async server => {
 
 Start the server
 ```bash
-# Production
 $ npm start
-
-# Development
-$ npm run dev
 ```
 
 ... Is that it? **Yes**
 
 ### Highlights
+* Asynchronous
 * Out-of-the-box support for ES modules
-* No boilerplating - focus on the code
 * Middleware, routing and validation
-* Pretty errors during development
 * Really fast (See benchmarks)
 * Plain HTTP
-* Asynchronous
 
 ### Examples
 * [Basic routing](https://github.com/neist/pleasant/tree/master/examples/basic)
@@ -66,66 +59,24 @@ $ npm run dev
 ... More examples coming soon.
 
 ### ES Modules
-With the help of [@std/esm](https://github.com/standard-things/esm), **pleasant** has full out-of-the-box support for ES modules. You don't need to set up babel or any other transpiling.
+With the help of [esm](https://github.com/standard-things/esm), **pleasant** has full out-of-the-box support for ES modules. You don't need to use babel or `--experimental-modules`.
 
 So instead of:
 ```js
-// routes/index.js
+// index.js
 const something = require('something')
 module.exports = async server => {}
 ```
 
 You can do:
 ```js
-// routes/index.js
+// index.js
 import something from 'something'
 export default async server => {}
 ```
 
-### Registering routes and plugins
-**pleasant** automatically registers routes and plugins.
-
-It uses the following glob patterns:
-* `routes/*.js`
-* `routes/*.mjs`
-* `routes/*/index.js`
-* `routes/*/index.mjs`
-
-For example:
-```bash
-routes/
-  route-a.js  # Registered
-  route-b.mjs  # Registered
-  route-c/
-    index.js  # Registered
-    helper.js # Ignored
-```
-
-Routes are registered using the *default* exported function:
-```js
-// routes/route-a.js
-export default async server => {
-  // Do your magic
-  server.route({
-    url: '/',
-    method: 'GET',
-    handler: async (req, res) => {
-      // Emit event
-      server.emit('log', 'Hello from route')
-
-      // Send response
-      res.send({ status: 'ok' })
-    }
-  })
-}
-```
-
 ### Main entry file
-The main entry file is called *before* automatically registering routes, which makes it useful for plugins and configuration.
-
-You can even choose to opt-out of automatically registering routes and plugins and do it all manually in the main entry file. This requires the *manual* flag: `pleasant --manual server.js`.
-
-You can specify a main entry file (*server.js*) by doing the following:
+The main entry file is where all the magic happens. You can specify the entry (*server.js*) by doing the following:
 
 *package.json*
 ```json
@@ -146,93 +97,88 @@ The main entry file is registered using the *default* exported function:
 import cors from 'cors'
 
 export default async server => {
-  // Enable cors
+  // Enable cors middleware
   server.use(cors())
 
-  // Get environment
-  const { NODE_ENV = 'development' } = process.env
+  // Register a single plugin
+  await server.register(import('./routes/index'))
 
-  // Set config
-  server.set('config', {
-    env: NODE_ENV
+  // Register multiple plugins
+  await server.register(
+    // Prefix middleware/routes
+    "/api/v1",
+
+    // Array of plugins
+    [
+      import("./routes/users"),
+      import("./routes/articles"),
+      import("./routes/blog")
+    ],
+    
+    // Pass options when registering
+    {
+      foo: true,
+      bar: false
+    }
+  )
+
+  // Register a route
+  server.route({
+    method: 'GET',
+    url: '/ping',
+    handler: async (req, res) => {
+      res.send('pong')
+    }
   })
 }
 ```
 
-### Lifecycle
+### Plugins
+Plugins are also registered using the *default* exported function:
+```js
+// index.js
+export default async server => {
+  // Register plugin
+  await server.register(
+    import('./routes/route-a')
+  )
+}
+```
 
-**pleasant** has the following lifecycle:
-1. Registers main entry file if specified
-3. Automatically registers routes
-4. Server emits 'ready' event.
+```js
+// routes/route-a.js
+export default async server => {
+  // Register route
+  server.route({
+    url: '/',
+    method: 'GET',
+    handler: async (req, res) => {
+      // Emit event
+      server.emit('log', {
+        message: 'Hello from route'
+      })
+
+      // Send response
+      res.send({ status: 'ok' })
+    }
+  })
+}
+```
 
 
 ### Routing
 **pleasant** is built on [router](https://github.com/pillarjs/router) and supports express-like route parameters.
 
 ```js
+// URL: /users/34/books/8989
 server.route({
   method: 'GET',
   url: '/users/:userId/books/:bookId',
   handler: async (req, res) => {
-    // Request URL: http://localhost:3000/users/34/books/8989
-    // req.params: { "userId": "34", "bookId": "8989" }
+    console.log(req.params)
+    // { "userId": "34", "bookId": "8989" }
   }
 })
-```
-
-### Validation
-Validating data can be very helpful in making sure that your application is stable and secure. **pleasant** allows this functionality by using the module [joi](https://github.com/hapijs/joi).
-
-```js
-import joi from 'joi'
-
-server.route({
-  method: 'GET',
-  url: '/',
-  validate: {
-    query: {
-      offset: joi.number().default(0),
-      limit: joi.number().default(10).max(100)
-    }
-  },
-  handler: async (req, res) => {
-    const { offset, limit } = req.query
-    //res.send()
-  }
-})
-```
-**URL:** /?offset=0&limit=200
-```json
-{
-  "statusCode": 400,
-  "error": "Bad Request",
-  "message": "\"limit\" must be less than or equal to 100",
-  "source": "query.limit"
-}
-```
-
-### Error handling
-**pleasant** supports [boom](https://github.com/hapijs/boom) error objects in `res.send`
-```js
-import boom from 'boom'
-
-server.route({
-  method: 'GET',
-  url: '/',
-  handler: async (req, res) => {
-    // res.send(boom.notFound())
-    // res.send(boom.badRequest())
-    res.send(boom.badImplementation())
-  }
-})
-```
-```json
-{
-  "statusCode": 500,
-  "error": "Internal Server Error",
-  "message": "An internal server error occurred"
-}
 ```
 
 ### Middleware
@@ -252,17 +198,92 @@ Route-specific middleware can be enabled like so:
 ```js
 import cors from 'cors'
 
+const hello = (name) => (req, res, next) => {
+  console.log(`Hello ${name}!`)
+  next()
+}
+
+
 server.route({
   method: 'GET',
   url: '/',
   handler: [
+    // Middleware #1
     cors(),
-    // ... and more
+
+    // Middleware #2
+    hello('World'),
+    
+    // Route handler
     async (req, res) => {
       res.send('Hello World')
     }
   ]
 })
+```
+
+### Validation
+Validating data can be very helpful in making sure that your application is stable and secure. **pleasant** provides this functionality with the validator [joi](https://github.com/hapijs/joi).
+
+```js
+import joi from 'joi'
+
+server.route({
+  method: 'GET',
+  url: '/',
+  validate: {
+    query: {
+      offset: joi.number().default(0),
+      limit: joi.number().default(10).max(100)
+    }
+  },
+  handler: async (req, res) => {
+    const { offset, limit } = req.query
+    res.send('A smile of joi!')
+  }
+})
+```
+**URL:** /?offset=0&limit=200
+```json
+{
+  "statusCode": 400,
+  "error": "Bad Request",
+  "message": "\"limit\" must be less than or equal to 100",
+  "source": "query.limit"
+}
+```
+
+### Error handling
+**pleasant** comes with a built-in error handler, which takes care of any errors that might have encountered. This default error-handling middleware function is added at the end of the middleware function stack.
+
+You can define custom error-handling middleware last, after other server.use() and routes calls; for example:
+```js
+server.use((err, req, res, next) => {
+  // Handle error
+})
+```
+
+### Error responses
+**pleasant** supports [boom](https://github.com/hapijs/boom) error objects in `res.send`
+```js
+import boom from 'boom'
+
+server.route({
+  method: 'GET',
+  url: '/',
+  handler: async (req, res) => {
+    // res.send(boom.badImplementation())
+    // res.send(boom.badRequest())
+    res.send(boom.notFound())
+  }
+})
+```
+```json
+{
+  "statusCode": 404,
+  "error": "Not Found",
+  "message": "missing"
+}
 ```
 
 ### API
@@ -290,36 +311,49 @@ server.use((err, req, res, next) => {
 })
 ```
 
-#### `await server.register(plugin, [config = {}])`
-**pleasant** allows you to extend its functionalities with plugins.
+#### `await server.register([prefix], plugin, [options = {}])`
+**pleasant** allows you to extend its functionalities with plugins. A plugin can be a set of routes, a server decorator or whatever.
 
+* `prefix` An optional path prefix used by any calls to `server.route()` and `server.use()`.
 * `plugin` A dynamic or static module import. (Also accepts and array of plugins).
-* `config` An optional configuration object that's passed to the plugin
+* `options` An optional options object that's passed to the plugin(s)
 
-Plugins are loaded and executed in series, each one running once the previous plugin has finished registering.
+Plugins are loaded and registered in series, each one running once the previous plugin has finished registering.
 
 Example:
 ```js
-// Import plugin
+// Import some plugin
 import somePlugin from './plugin-a'
-
-// Register multiple plugins.
-await server.register([
-  somePlugin,
-  import('./plugin-b')
-])
 
 // Register a single plugin
 await server.register(
   import('./awesome-plugin'),
   { a: 'b', c: 'd' }
 )
+
+// Register multiple plugins
+await server.register(
+  // Prefix middleware/routes
+  "/api/v1",
+
+  // Array of plugins
+  [
+    import("./routes/users"),
+    somePlugin
+  ],
+  
+  // Pass options when registering
+  {
+    foo: true,
+    bar: false
+  }
+)
 ```
 
 ```js
 // awesome-plugin.js
-export default async (server, config) => {
-  console.log(config) // { a: 'b', c: 'd' }
+export default async (server, options) => {
+  console.log(options) // { a: 'b', c: 'd' }
 }
 ```
 
@@ -379,6 +413,9 @@ Sends the HTTP response.
   * `string`: `data` is written as-is.
   * `Error`: `boom` is written as boom payload.
 
+#### `server.routes()`
+Returns an array of registered routes.
+
 #### `server.on(type, handler)`
 Register an event handler for the given type.
 * `type` Type of event to listen for, or "*" for all events
@@ -433,7 +470,7 @@ Set the value of the key
 
 Example:
 ```js
-server.set('config', { a: 'b', c: 'd' })
+server.set('foo', { a: 'b', c: 'd' })
 ```
 
 #### `server.get([key])`
@@ -445,8 +482,8 @@ If the key is not found, it will return undefined.
 
 Example:
 ```js
-server.get('config') // { a: 'b', c: 'd' }
-server.get() // { config: { a: 'b', c: 'd' } }
+server.get('foo') // { a: 'b', c: 'd' }
+server.get() // { foo: { a: 'b', c: 'd' } }
 ```
 
 #### `server.listen()`
@@ -496,7 +533,6 @@ $ pleasant -h
   Options:
     -p, --port <n>  Port to listen on (defaults to 3000)
     -H, --host      The host on which server will run
-    -m, --manual    Disables automatically registering routes
     -v, --version   Output the version number
     -h, --help      Show this usage information
 ```
