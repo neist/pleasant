@@ -90,28 +90,6 @@ export default async server => {
   // Enable cors middleware
   server.use(cors())
 
-  // Register a single plugin
-  await server.register(import('./routes/index'))
-
-  // Register multiple plugins
-  await server.register(
-    // Prefix middleware/routes
-    "/api/v1",
-
-    // Array of plugins
-    [
-      import("./routes/users"),
-      import("./routes/articles"),
-      import("./routes/blog")
-    ],
-    
-    // Pass options when registering
-    {
-      foo: true,
-      bar: false
-    }
-  )
-
   // Register a route
   server.route({
     method: 'GET',
@@ -124,13 +102,32 @@ export default async server => {
 ```
 
 ### Plugins
-Plugins are registered using the *default* exported function, passing the server instance as argument. See API for more details.
+Plugins are registered using the *default* exported function, passing the server instance and optional options as arguments. See API for more details.
 ```js
 // index.js
 export default async server => {
   // Register plugin
   await server.register(
     import('./routes/route-a')
+  )
+
+  // Register multiple plugins
+  await server.register(
+    // Prefix middleware/routes
+    "/api/v1",
+
+    // Array of plugins
+    [
+      import("./routes/route-b"),
+      import("./routes/route-c"),
+      import("./routes/route-d")
+    ],
+    
+    // Pass options when registering
+    {
+      foo: true,
+      bar: false
+    }
   )
 }
 ```
@@ -307,27 +304,30 @@ Plugins are loaded and registered in series, each one running once the previous 
 
 Example:
 ```js
-// Import some plugin
-import somePluginImport from './plugin-a'
+// Static plugin import
+import staticRouteImport from './route-b'
 
 // Register a single plugin
 await server.register(
+  // Plugin
   import('./awesome-plugin'),
+
+  // Options
   { a: 'b', c: 'd' }
 )
 
 // Register multiple plugins
 await server.register(
-  // Prefix middleware/routes
+  // Prefix
   "/api/v1",
 
   // Array of plugins
   [
-    import("./routes/users"),
-    somePluginImport
+    import("./routes/route-a"),
+    staticRouteImport
   ],
   
-  // Pass options when registering
+  // Options
   {
     foo: true,
     bar: false
