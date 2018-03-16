@@ -1,16 +1,17 @@
 #!/usr/bin/env node
 const semver = require('semver')
+const colors = require('colors')
 const { engines } = require('../package')
 const version = engines.node
-require = require('esm')(module, { mode: 'auto', cjs: true })
 
 if (!semver.satisfies(process.version, version)) {
   console.error(
-    '\x1b[31m',
-    `pleasant requires node version ${version}. Not satisfied with current version ${process.version}.`,
-    '\x1b[0m'
+    colors.red(
+      `pleasant requires node version ${version}. Not satisfied with current version ${process.version}.\n`
+    )
   )
-  process.exit(1)
+  process.exit()
 }
 
+require = require('esm')(module, { mode: 'auto', cjs: true })
 require('../lib/cli/index.js').default()
