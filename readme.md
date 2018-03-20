@@ -42,15 +42,18 @@ $ npm start
 ... Is that it? **Yes**
 
 ### Highlights
-* Getting started is easy
+* Getting started is <u>easy</u>
 * Out-of-the-box support for ES modules
-* Middleware, routing and validation
-* Really fast (See benchmarks)
-* Native HTTP server
-* Asynchronous
+* Middleware support (Connect/Express)
+* Flexible router (Express route pattern definitions)
+* Built-in request validation.
+* Built-in error handling.
+* Really fast ([Benchmarks](#benchmarks))
+* Native HTTP server (Almost...)
+* Asynchronous (Use async and await)
 
 ### ES Modules
-With the help of [esm](https://github.com/standard-things/esm), **pleasant** has full out-of-the-box support for ES modules. You don't need to use babel or `--experimental-modules`.
+With the help of [esm](https://github.com/standard-things/esm), **pleasant** has full out-of-the-box support for ES modules. You don't need to use babel, other transpiling or the `--experimental-modules` flag.
 
 So instead of:
 ```js
@@ -150,7 +153,7 @@ export default async server => {
 
 
 ### Routing
-**pleasant** is fully compatible with express route paths.
+**pleasant** is fully compatible with Express route pattern definitions.
 
 ```js
 // URL: /users/34/books/8989
@@ -165,7 +168,7 @@ server.route({
 ```
 
 ### Middleware
-You can enable connect/express middleware using `server.use`
+You can enable connect/express middleware using `server.use`.
 
 ```js
 import cors from 'cors'
@@ -205,8 +208,14 @@ server.route({
 ```
 
 ### Validation
-Validating data can be very helpful in making sure that your application is stable and secure. **pleasant** provides this functionality with the validator [joi](https://github.com/hapijs/joi).
+Validating data can be very helpful in making sure that your application is stable and secure. **pleasant** supports the amazing validator [joi](https://github.com/hapijs/joi), which allows you to create your validations with a simple and clear object syntax.
 
+Install:
+```bash
+npm install joi --save
+```
+
+Example:
 ```js
 import joi from 'joi'
 
@@ -236,17 +245,37 @@ server.route({
 ```
 
 ### Error handling
-**pleasant** comes with a built-in error handler, which takes care of any errors that might encounter. This default error-handling middleware function is added at the end of the middleware function stack.
+**pleasant** comes with a built-in error handler, which takes care of any errors that might occur.
 
-You can define custom error-handling middleware last, after other `server.use()` and routes calls; for example:
+If an error is thrown and not caught by you, the response will automatically be 500:
+
+```json
+{
+    "statusCode": 500,
+    "error": "Internal Server Error",
+    "message": "An internal server error occurred"
+}
+```
+
+If the Error object that's thrown contains a `statusCode` property, that's used as the HTTP code to be sent.
+
+You can define custom error-handling middleware last, after other `server.use()` and `server.route()` calls; for example:
 ```js
 server.use((err, req, res, next) => {
   // Handle error
+  next()
 })
 ```
 
 ### Error responses
-**pleasant** supports [boom](https://github.com/hapijs/boom) error objects in `res.send`
+**pleasant** supports [boom](https://github.com/hapijs/boom) error objects.
+
+Install:
+```bash
+npm install boom --save
+```
+
+Route example:
 ```js
 import boom from 'boom'
 
@@ -260,13 +289,25 @@ server.route({
   }
 })
 ```
+Middleware example:
+```js
+import boom from 'boom'
+
+const middleware = (req, res, next) => {
+  next(boom.notFound())
+}
+```
+
+Response example:
 ```json
 {
   "statusCode": 404,
   "error": "Not Found",
-  "message": "missing"
+  "message": "Not Found"
 }
 ```
+
+
 
 ### API
 
@@ -297,24 +338,29 @@ server.use((err, req, res, next) => {
 **pleasant** allows you to extend its functionalities with plugins. A plugin can be a set of routes, a server decorator or whatever.
 
 * `prefix` An optional path prefix used by any calls to `server.route()` and `server.use()`.
-* `plugin` A dynamic or static module import. (Also accepts and array of plugins).
+* `plugin` A dynamic or static module import. (Also accepts an array of plugins).
 * `options` An optional options object that's passed to the plugin(s)
 
-Plugins are loaded and registered in series, each one running once the previous plugin has finished registering.
+Plugins are registered sequentially, each one running once the previous plugin has finished registering.
 
-Example:
+Examples:
 ```js
-// Static plugin import
-import staticRouteImport from './route-b'
-
 // Register a single plugin
 await server.register(
   // Plugin
   import('./awesome-plugin'),
 
   // Options
-  { a: 'b', c: 'd' }
+  {
+    foo: true,
+    bar: false
+  }
 )
+```
+
+```js
+// Static plugin import
+import staticRouteImport from './route-b'
 
 // Register multiple plugins
 await server.register(
@@ -338,14 +384,14 @@ await server.register(
 ```js
 // awesome-plugin.js
 export default async (server, options) => {
-  console.log(options) // { a: 'b', c: 'd' }
+  console.log(options) // { foo: true, bar: false }
 }
 ```
 
 #### `server.route(config)`
 Add a route
 * `config`
-  * `method` HTTP method. Typically one of 'GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS' or 'ALL'.
+  * `method` HTTP method. Typically one of 'GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'. Also supports 'ALL'.
   * `url` The url for which the handler/middleware is invoked.
   * `validate` Request input validation rules for various request components. Uses [joi](https://github.com/hapijs/joi) for validation.
     * `headers` Validation rules for incoming request headers.
