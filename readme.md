@@ -309,7 +309,7 @@ Middleware example:
 import boom from 'boom'
 
 const middleware = (req, res, next) => {
-  next(boom.notFound())
+  next(boom.forbidden())
 }
 ```
 
