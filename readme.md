@@ -42,12 +42,12 @@ $ npm start
 ... Is that it? **Yes**
 
 ### Highlights
-* Easy and fast to get started
+* Getting started is easy
 * Out-of-the-box support for ES modules
 * Middleware, routing and validation
 * Really fast (See benchmarks)
+* Native HTTP server
 * Asynchronous
-* Plain HTTP
 
 ### ES Modules
 With the help of [esm](https://github.com/standard-things/esm), **pleasant** has full out-of-the-box support for ES modules. You don't need to use babel or `--experimental-modules`.
