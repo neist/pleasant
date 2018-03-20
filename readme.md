@@ -380,13 +380,15 @@ server.route({
 ```
 
 The request and response objects are plain HTTP except for `req.params`, `req.query`, and `res.send`
-##### `req.params`
+
+
+**`req.params`**  
 This property is an object containing properties mapped to the named route “parameters”. For example, if you have the route /user/:name, then the “name” property is available as req.params.name. This object defaults to {}
 
-##### `req.query`
+**`req.query`**  
 This property is an object containing a property for each query string parameter in the route.
 
-##### `res.send([statusCode = 200], data = null)`
+**`res.send([statusCode = 200], data = null)`**  
 Sends the HTTP response.
 
 * `statusCode` HTTP status code. Defaults to 200.
