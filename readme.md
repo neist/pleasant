@@ -223,7 +223,7 @@ server.route({
 ```
 
 ### Validation
-Validating data can be very helpful in making sure that your application is stable and secure. **pleasant** supports the amazing validator [joi](https://github.com/hapijs/joi), which allows you to create your validations with a simple and clear object syntax.
+Validating data can be very helpful in making sure that your application is stable and secure. **pleasant** supports the incredible validator [joi](https://github.com/hapijs/joi), which allows you to create your validations with a simple and clear object syntax.
 
 Install:
 ```bash
@@ -346,6 +346,7 @@ Define error-handling middleware functions in the same way as other middleware f
 ```js
 server.use((err, req, res, next) => {
   // Handle error
+  next()
 })
 ```
 
@@ -374,8 +375,17 @@ await server.register(
 ```
 
 ```js
+// awesome-plugin.js
+export default async (server, options) => {
+  console.log(options) // { foo: true, bar: false }
+}
+```
+
+Example with multiple (prefixed) plugins:
+
+```js
 // Static plugin import
-import staticRouteImport from './route-b'
+import staticPluginImport from './route-b'
 
 // Register multiple plugins
 await server.register(
@@ -385,7 +395,7 @@ await server.register(
   // Array of plugins
   [
     import("./routes/route-a"),
-    staticRouteImport
+    staticPluginImport
   ],
   
   // Options
@@ -394,13 +404,6 @@ await server.register(
     bar: false
   }
 )
-```
-
-```js
-// awesome-plugin.js
-export default async (server, options) => {
-  console.log(options) // { foo: true, bar: false }
-}
 ```
 
 #### `server.route(config)`
