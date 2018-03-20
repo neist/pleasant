@@ -573,6 +573,6 @@ $ pleasant -h
 ```
 
 ### Inspiration
-* [hapi](https://github.com/hapijs/hapi)
-* [next.js](https://github.com/zeit/next.js/)
 * [micro](https://github.com/zeit/micro)
+* [hapi](https://github.com/hapijs/hapi)
+* [express](https://github.com/expressjs/express)
