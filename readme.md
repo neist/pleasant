@@ -49,7 +49,7 @@ $ npm start
 * Built-in request validation.
 * Built-in error handling.
 * Really fast ([Benchmarks](#benchmarks))
-* Native HTTP server (Almost...)
+* Native HTTP server (Plus a few decorators)
 * Asynchronous (Use async and await)
 
 ### ES Modules
