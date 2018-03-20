@@ -167,6 +167,21 @@ server.route({
 })
 ```
 
+Let’s say we wanted a `:userId` parameter in a route rule to match only a 6 digit integer.
+
+The following regex parameter rule does that well:
+
+```js
+server.route({
+  method: 'GET',
+  url: '^/users/:userId([0-9]{6})',
+  handler: async (req, res) => {
+    const { userId } = req.params
+    res.send(`Route match for user ID: ${userId}`);
+  }
+})
+```
+
 ### Middleware
 You can enable connect/express middleware using `server.use`.
 
