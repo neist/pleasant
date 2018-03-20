@@ -42,7 +42,7 @@ $ npm start
 ... Is that it? **Yes**
 
 ### Highlights
-* Getting started is <u>easy</u>
+* Getting started is **easy!**
 * Out-of-the-box support for ES modules
 * Middleware support (Connect/Express)
 * Flexible router (Express route pattern definitions)
