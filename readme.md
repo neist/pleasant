@@ -5,7 +5,7 @@
 
 A minimalistic and asynchronous HTTP framework with support for ES modules.
 
-### Getting started 🚀
+### Getting started
 
 Install it
 ```bash
@@ -39,7 +39,7 @@ Start the server
 $ npm start
 ```
 
-... Is that it? **Yes** 👌
+## ... Is that it? **Yes** 👌
 
 ### Highlights
 * Getting started is **easy!**
