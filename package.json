@@ -5,12 +5,13 @@
   "engines": {
     "node": ">= 8.5.0"
   },
-  "tags": [
+  "keywords": [
+    "server",
+    "http",
     "web",
     "framework",
     "api",
-    "ESM",
-    "http"
+    "esm"
   ],
   "main": "index.js",
   "bin": {
