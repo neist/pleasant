@@ -303,11 +303,9 @@ Response example:
 }
 ```
 
-
-
 ### API 🤓
 
-### `const server = pleasant()`
+#### `const server = pleasant()`
 Initialize **pleasant**. The `pleasant()` function is a top-level function exported by the pleasant module.
 
 #### `server.use([path], ...middleware)`
