@@ -39,7 +39,7 @@ Start the server
 $ npm start
 ```
 
-## ... Is that it? **Yes** 👌
+ ... Is that it? **Yes** 👌
 
 ### Highlights
 * Getting started is **easy!**
