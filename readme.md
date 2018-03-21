@@ -5,7 +5,7 @@
 
 A minimalistic and asynchronous HTTP framework with support for ES modules.
 
-### Getting started
+### Getting started 🚀
 
 Install it
 ```bash
@@ -39,7 +39,7 @@ Start the server
 $ npm start
 ```
 
-... Is that it? **Yes**
+... Is that it? **Yes** 👌
 
 ### Highlights
 * Getting started is **easy!**
@@ -53,7 +53,7 @@ $ npm start
 * Native HTTP server
 
 ### ES Modules
-With the help of [esm](https://github.com/standard-things/esm), **pleasant** has full out-of-the-box support for ES modules. You don't need to use babel, other transpiling or the `--experimental-modules` flag.
+With the help of [esm](https://github.com/standard-things/esm), **pleasant** has full out-of-the-box support for ES modules. You don't need to use babel/transpiling or the `--experimental-modules` flag.
 
 So instead of:
 ```js
@@ -305,7 +305,7 @@ Response example:
 
 
 
-### API
+### API 🤓
 
 ### `const server = pleasant()`
 Initialize **pleasant**. The `pleasant()` function is a top-level function exported by the pleasant module.
