@@ -106,32 +106,13 @@ export default async server => {
 ```
 
 ### Plugins
-Plugins are registered using the *default* exported function, passing the server instance and optional options as arguments. See API for more details.
+Plugins are registered using the *default* exported function, passing the server instance as argument. See API for more details.
 ```js
 // index.js
 export default async server => {
   // Register plugin
   await server.register(
     import('./routes/route-a')
-  )
-
-  // Register multiple plugins
-  await server.register(
-    // Prefix
-    "/api/v1",
-
-    // Array of plugins
-    [
-      import("./routes/route-b"),
-      import("./routes/route-c"),
-      import("./routes/route-d")
-    ],
-    
-    // Options
-    {
-      foo: true,
-      bar: false
-    }
   )
 }
 ```
@@ -169,7 +150,7 @@ server.route({
 
 Let’s say we wanted a `:userId` parameter in a route rule to match only a 6 digit integer.
 
-The following regex parameter rule does that well:
+The following regex parameter rule does that:
 
 ```js
 server.route({
@@ -266,9 +247,9 @@ If an error is thrown and not caught by you, the response will automatically be 
 
 ```json
 {
-    "statusCode": 500,
-    "error": "Internal Server Error",
-    "message": "An internal server error occurred"
+  "statusCode": 500,
+  "error": "Internal Server Error",
+  "message": "An internal server error occurred"
 }
 ```
 
@@ -308,9 +289,9 @@ Middleware example:
 ```js
 import boom from 'boom'
 
-const middleware = (req, res, next) => {
+server.use((req, res, next) => {
   next(boom.forbidden())
-}
+})
 ```
 
 Response example:
