@@ -28,10 +28,9 @@
   },
   "author": "Kasper Neist <kasper@neist.com>",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/neist/pleasant/issues"
-  },
-  "repository": "git@github.com:neist/pleasant.git",
+  "bugs": "https://github.com/neist/pleasant/issues",
+  "repository": "neist/pleasant",
+  "homepage": "https://github.com/neist/pleasant/",
   "dependencies": {
     "body-parser": "^1.18.2",
     "boom": "^7.1.1",
