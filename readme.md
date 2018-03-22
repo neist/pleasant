@@ -26,7 +26,7 @@ Populate *index.js*
 export default async server => {
   server.route({
     method: 'GET',
-    url: '/',
+    url: '/hello'
     handler: async (req, res) => {
       res.send('Hello World')
     }
@@ -36,7 +36,7 @@ export default async server => {
 
 Start the server
 
-![cli](https://i.imgur.com/gKxdETG.png)
+![cli](https://i.imgur.com/N6TcrR5.png)
 
  ... Is that it? **Yes** 👌
 
