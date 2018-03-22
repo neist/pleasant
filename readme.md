@@ -35,9 +35,8 @@ export default async server => {
 ```
 
 Start the server
-```bash
-$ npm start
-```
+
+![cli](https://i.imgur.com/gKxdETG.png)
 
  ... Is that it? **Yes** 👌
 
