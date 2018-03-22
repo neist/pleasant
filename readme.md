@@ -68,8 +68,8 @@ import something from 'something'
 export default async server => {}
 ```
 
-### Main entry file
-The main entry file is where all the magic happens. You can specify the entry (*server.js*) by doing the following:
+### Main file
+The main file is where all the magic happens. You can specify it (*server.js*) by doing the following:
 
 *package.json*
 ```json
@@ -84,7 +84,7 @@ The main entry file is where all the magic happens. You can specify the entry (*
 $ pleasant server.js
 ```
 
-The main entry file is registered using the *default* exported function, passing the server instance as argument.
+The main file is registered using the *default* exported function, passing the server instance as argument.
 ```js
 // server.js
 import cors from 'cors'
