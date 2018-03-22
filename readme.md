@@ -36,7 +36,7 @@ export default async server => {
 
 Start the server
 
-![cli](https://i.imgur.com/N6TcrR5.png)
+![cli](https://media.giphy.com/media/2zoCggfqLV1IfQOBjE/giphy.gif)
 
  ... Is that it? **Yes** 👌
 
