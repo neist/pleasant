@@ -37,6 +37,7 @@
     "colors": "^1.2.1",
     "esm": "^3.0.5",
     "is-stream": "^1.1.0",
+    "joi": "^13.1.2",
     "mri": "^1.1.0",
     "router": "^1.3.2",
     "semver": "^5.4.1"
@@ -45,8 +46,5 @@
     "husky": "^0.14.3",
     "lint-staged": "^6.1.0",
     "prettier": "^1.7.4"
-  },
-  "peerDependencies": {
-    "joi": "^13.0.0"
   }
 }
