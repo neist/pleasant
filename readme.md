@@ -529,13 +529,21 @@ server.listen(3000, (err) => {
 ```
 
 ### Benchmarks
-This is a synthetic, "hello world" benchmark that aims to evaluate the framework overhead. Don't trust this :-)
+This is a synthetic, "Hello World" benchmark that aims to evaluate the framework overhead.
 
-* http.createServer: 39,680 Req/Sec
-* micro: 37,018 Req/Sec
-* **pleasant: 32,896 Req/Sec**
-* Express: 18,273 Req/Sec
+Results are taken after 1 warm-up run. The tool used for results is the following:
+```
+wrk -t8 -c50 -d30s http://localhost:3000/
+```
+
+* pleasant: 35,359 Req/Sec
+* http.createServer: 33,419 Req/Sec
+* Express: 15,466 Req/Sec
 * Hapi: 6,207 Req/Sec
+
+**How come `pleasant` is faster than `http.createServer`?**
+
+When multiple calls to `res.send()` are made, the functions are queued for execution. The entire queue is processed every event loop iteration. This scheduling provides a performance boost.
 
 ### CLI
 ```bash
