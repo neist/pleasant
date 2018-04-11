@@ -121,8 +121,8 @@ export default async server => {
 export default async server => {
   // Register route
   server.route({
-    url: '/',
     method: 'GET',
+    url: '/',
     handler: async (req, res) => {
       // Send response
       res.send({ status: 'ok' })
