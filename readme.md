@@ -533,7 +533,7 @@ This is a synthetic, "Hello World" benchmark that aims to evaluate the framework
 
 Results are taken after 1 warm-up run. The tool used for results is the following:
 ```
-wrk -t8 -c50 -d30s http://localhost:3000/
+wrk -t8 -c100 -d30s http://localhost:3000/
 ```
 
 * pleasant: 35,359 Req/Sec
@@ -543,7 +543,7 @@ wrk -t8 -c50 -d30s http://localhost:3000/
 
 **How come `pleasant` is faster than `http.createServer`?**
 
-When multiple calls to `res.send()` are made, the functions are queued for execution. The entire queue is processed every event loop iteration. This scheduling provides a performance boost.
+It's really not. But `pleasant` does event loop scheduling, that sometimes provides a performance boost. When multiple calls to `res.send()` are made, the functions are queued for execution. The entire queue is processed every event loop iteration.
 
 ### CLI
 ```bash
