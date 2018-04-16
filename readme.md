@@ -421,6 +421,13 @@ server.route({
 })
 ```
 
+Alternatively, it's also possible to specify routes like so:
+```js
+server.route('GET', '/', async (req, res) => {
+  res.send({ status: 'ok' })
+})
+```
+
 The request and response objects are plain HTTP except for `req.params`, `req.query`, and `res.send`
 
 
