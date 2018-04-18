@@ -1,7 +1,7 @@
 {
   "name": "pleasant",
   "version": "3.1.1",
-  "description": "A minimalistic, asynchronous and ESM-ready HTTP framework.",
+  "description": "Next-generation ES6 HTTP framework. Asynchronous and lightweight.",
   "engines": {
     "node": ">= 8.5.0"
   },

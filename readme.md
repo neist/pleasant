@@ -3,7 +3,7 @@
 [![NPM version](https://img.shields.io/npm/v/pleasant.svg)](https://www.npmjs.com/package/pleasant)
 ![version](https://img.shields.io/badge/node-%3E=8.5.0-brightgreen.svg)
 
-A minimalistic and asynchronous HTTP framework with support for ES modules.
+Next-generation ES6 HTTP framework. Asynchronous and lightweight.
 
 ### Getting started
 
