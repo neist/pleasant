@@ -1,6 +1,6 @@
 {
   "name": "pleasant",
-  "version": "3.1.1",
+  "version": "3.1.2",
   "description": "Next-generation ES6 HTTP framework. Asynchronous and lightweight.",
   "engines": {
     "node": ">= 8.5.0"
