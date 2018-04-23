@@ -307,27 +307,6 @@ Response example:
 #### `const server = pleasant()`
 Initialize **pleasant**. The `pleasant()` function is a top-level function exported by the pleasant module.
 
-#### `server.use([path], ...middleware)`
-Use the given middleware function for all http methods on the given path, defaulting to the root path.
-
-* `path` The path for which the middleware function is invoked
-* `middleware` A middleware function
-
-```js
-server.use((req, res, next) => {
-  console.log('Logged')
-  next()
-})
-```
-
-Define error-handling middleware functions in the same way as other middleware functions, except error-handling functions have four arguments instead of three: (err, req, res, next). For example:
-```js
-server.use((err, req, res, next) => {
-  // Handle error
-  next()
-})
-```
-
 #### `await server.register([prefix], plugin, [options = {}])`
 **pleasant** allows you to extend its functionalities with plugins. A plugin can be a set of routes, a server decorator or whatever.
 
@@ -382,6 +361,27 @@ await server.register(
     bar: false
   }
 )
+```
+
+#### `server.use([path], ...middleware)`
+Use the given middleware function for all http methods on the given path, defaulting to the root path.
+
+* `path` The path for which the middleware function is invoked
+* `middleware` A middleware function
+
+```js
+server.use((req, res, next) => {
+  console.log('Logged')
+  next()
+})
+```
+
+Define error-handling middleware functions in the same way as other middleware functions, except error-handling functions have four arguments instead of three: (err, req, res, next). For example:
+```js
+server.use((err, req, res, next) => {
+  // Handle error
+  next()
+})
 ```
 
 #### `server.route(config)`
