@@ -387,7 +387,7 @@ await server.register(
 #### `server.route(config)`
 Add a route
 * `config`
-  * `method` HTTP method. Typically one of 'GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'. Also supports 'ALL'.
+  * `method` HTTP method. Typically one of 'GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'. Also supports an array.
   * `url` The url for which the handler/middleware is invoked.
   * `validate` Request input validation rules for various request components. Uses [joi](https://github.com/hapijs/joi) for validation.
     * `headers` Validation rules for incoming request headers.
