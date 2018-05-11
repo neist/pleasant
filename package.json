@@ -11,7 +11,8 @@
     "web",
     "framework",
     "api",
-    "esm"
+    "esm",
+    "es6"
   ],
   "main": "index.js",
   "bin": {
