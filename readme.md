@@ -1,5 +1,3 @@
-# Pleasant 👌
-
 [![NPM version](https://img.shields.io/npm/v/pleasant.svg)](https://www.npmjs.com/package/pleasant)
 ![version](https://img.shields.io/badge/node-%3E=8.5.0-brightgreen.svg)
 
@@ -38,7 +36,7 @@ Start the server
 
 ![cli](https://media.giphy.com/media/2zoCggfqLV1IfQOBjE/giphy.gif)
 
- ... Is that it? **Yes** 👌
+ ... Is that it? **Yes**
 
 ### Highlights
 * Getting started is **easy!**
@@ -302,7 +300,7 @@ Response example:
 }
 ```
 
-### API 🤓
+### API
 
 #### `const server = pleasant()`
 Initialize **pleasant**. The `pleasant()` function is a top-level function exported by the pleasant module.
