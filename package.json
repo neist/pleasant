@@ -33,17 +33,17 @@
   "homepage": "https://github.com/neist/pleasant/",
   "dependencies": {
     "body-parser": "^1.18.2",
-    "boom": "^7.1.1",
-    "colors": "^1.2.1",
-    "esm": "^3.0.5",
-    "joi": "^13.1.2",
-    "mri": "^1.1.0",
+    "boom": "^7.2.0",
+    "colors": "^1.2.5",
+    "esm": "^3.0.34",
+    "joi": "^13.3.0",
+    "mri": "^1.1.1",
     "router": "^1.3.2",
-    "semver": "^5.4.1"
+    "semver": "^5.5.0"
   },
   "devDependencies": {
     "husky": "^0.14.3",
-    "lint-staged": "^6.1.0",
-    "prettier": "^1.7.4"
+    "lint-staged": "^6.1.1",
+    "prettier": "^1.12.1"
   }
 }
